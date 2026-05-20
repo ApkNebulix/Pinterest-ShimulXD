@@ -1,19 +1,18 @@
-name: Pinterest Bot Runner
+name: Pinterest Premium Bot
 
 on:
   schedule:
-    - cron: "0 */4 * * *" # প্রতি ৪ ঘণ্টা পর পর অটোমেটিক চলবে
-  workflow_dispatch: # ম্যানুয়ালি রান করার অপশন
+    - cron: "0 */4 * * *" # প্রতি ৪ ঘণ্টা পর অটোমেটিক রিস্টার্ট
+  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -23,6 +22,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Bot
-        timeout-minutes: 235 # ২৩৫ মিনিট (প্রায় ৪ ঘণ্টা) পর প্রসেসটি বন্ধ হবে যাতে নতুন শিডিউল শুরু হতে পারে
+      - name: Run Premium Bot
+        timeout-minutes: 238 # ৪ ঘণ্টা পূর্ণ হওয়ার একটু আগে বন্ধ হবে
         run: python bot.py
